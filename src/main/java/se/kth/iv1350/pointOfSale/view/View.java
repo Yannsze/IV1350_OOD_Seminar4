@@ -51,9 +51,7 @@ public class View {
             printSoldItemInfo(soldItem);
         }
 
-        contr.applyCustomerDiscount(12345);
-        contr.applyTotalDiscount();
-        contr.applyItemDiscount();
+        contr.applyCombinedDiscounts(12345);
         contr.initializePayment(500);
     }
 

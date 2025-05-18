@@ -9,6 +9,8 @@ import se.kth.iv1350.pointOfSale.view.TotalRevenueFileOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This is the application's only controller. All calls to the model pass through this class.
@@ -22,6 +24,7 @@ public class Controller {
     private LogHandler logger;
     private TotalRevenueView totalRevenueView = new TotalRevenueView();
     private TotalRevenueFileOutput totalRevenueFileOutput = new TotalRevenueFileOutput();
+
 
     /**
      * Create a new instance of Controller class with specified register and printer.
@@ -142,6 +145,20 @@ public class Controller {
     public void applyItemDiscount() {
         sale.setDiscountStrategy(new ItemDiscountStrategy(sale.getItemIDs()));
         sale.discount(0);
+    }
+
+    /**
+     * Applies every discount to the sale.
+     * @param customerID
+     */
+    public void applyCombinedDiscounts(int customerID) {
+        List<DiscountStrategy> strategies = new ArrayList<>();
+        strategies.add(new CustomerDiscountStrategy());
+        strategies.add(new TotalDiscountStrategy());
+        strategies.add(new ItemDiscountStrategy(sale.getItemIDs()));
+
+        sale.setDiscountStrategy(new CombinedDiscountStrategy(strategies));
+        sale.discount(customerID);
     }
 
     /**

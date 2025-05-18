@@ -108,9 +108,13 @@ public class Sale {
         for (int i = 0; i < currentSaleList.size(); i++) {
             SoldItem soldItem = currentSaleList.get(i);
             if (soldItem.getItem().getItemID() == item.getItemID()) {
+                double previousSubTotal = soldItem.getSubTotal();
                 soldItem.increaseQuantity(quantity);
-                runningTotal += soldItem.getSubTotal();
+                double newSubTotal = soldItem.getSubTotal();
+                runningTotal += (newSubTotal - previousSubTotal);
+                System.out.println("the price: " + runningTotal);
                 totalPriceInclVAT = runningTotal + runningTotal*VAT;
+                System.out.println("the price with VAT: " + totalPriceInclVAT);
                 notifyObservers();
                 return;
             }
