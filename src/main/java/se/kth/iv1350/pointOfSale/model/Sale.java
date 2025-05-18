@@ -112,9 +112,7 @@ public class Sale {
                 soldItem.increaseQuantity(quantity);
                 double newSubTotal = soldItem.getSubTotal();
                 runningTotal += (newSubTotal - previousSubTotal);
-                System.out.println("the price: " + runningTotal);
                 totalPriceInclVAT = runningTotal + runningTotal*VAT;
-                System.out.println("the price with VAT: " + totalPriceInclVAT);
                 notifyObservers();
                 return;
             }
