@@ -122,7 +122,7 @@ public class Controller {
      * Applies a discount to the sale, based on customerID.
      * @param customerID the customer ID for retrieving potential discounts.
      */
-    public void applyDiscount(int customerID) {
+    public void applyCustomerDiscount(int customerID) {
         sale.setDiscountStrategy(new CustomerDiscountStrategy());
         sale.discount(customerID);
     }
@@ -132,7 +132,16 @@ public class Controller {
      */
     public void applyTotalDiscount() {
         sale.setDiscountStrategy(new TotalDiscountStrategy());
-        sale.discount(0); 
+        double total = sale.getRunningTotal();
+        sale.discount(0);
+    }
+
+    /**
+     * Applies an item discount to the sale.
+     */
+    public void applyItemDiscount() {
+        sale.setDiscountStrategy(new ItemDiscountStrategy(sale.getItemIDs()));
+        sale.discount(0);
     }
 
     /**

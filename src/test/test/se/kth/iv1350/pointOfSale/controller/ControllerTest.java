@@ -79,22 +79,38 @@ public class ControllerTest {
     }
 
     @Test
-    void testApplyDiscountDoesNotCrash() {
-        assertDoesNotThrow(() -> {
-            contr.applyDiscount(12345);
-        }, "Applying discount should not crash even if no output returned.");
-    }
-
-    // new added test to make sure that discount has been added to the total price
-    @Test
-    void testApplyDiscountLowersTotal() throws DatabaseConnectionException, ItemInvalidException, IOException {
+    void testApplyCustomerDiscountLowersTotal() throws DatabaseConnectionException, ItemInvalidException, IOException {
         contr.initializeSale();
         contr.scanItem(123, 1);
         double before = contr.endSale();
-        contr.applyDiscount(56789); // test ändring
+        contr.applyCustomerDiscount(12345);
         double after = contr.getDiscountedTotal();
         assertTrue(after < before, "Total should be lowered after discount.");
     }
+
+    // removed from controller because it's already tested in side each specific classes
+    /*
+    @Test
+    void testApplyTotalDiscountLowersTotal() throws DatabaseConnectionException, ItemInvalidException, IOException {
+        contr.initializeSale();
+        contr.scanItem(123, 20);
+        double before = contr.endSale();
+        contr.applyTotalDiscount();
+        double after = contr.getDiscountedTotal();
+        assertTrue(after < before, "Total should be lowered after discount.");
+    }
+
+    @Test
+    void testApplyItemDiscountLowersTotal() throws DatabaseConnectionException, ItemInvalidException, IOException {
+        contr.initializeSale();
+        contr.scanItem(123, 1);
+        double before = contr.endSale();
+        contr.applyItemDiscount();
+        double after = contr.getDiscountedTotal();
+        assertTrue(after < before, "Total should be lowered after discount.");
+    }
+
+     */
 
     @Test
     void testInitializePaymentRegistersCorrectly() throws DatabaseConnectionException, ItemInvalidException, IOException {

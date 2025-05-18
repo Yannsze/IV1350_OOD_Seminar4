@@ -47,6 +47,17 @@ public class Sale {
     }
 
     /**
+     * Gets a list of item IDs for all items in the current sale.
+     * @return a list of item IDs.
+     */
+    public List<Integer> getItemIDs() {
+        List<Integer> itemIDs = new ArrayList<>();
+        for (SoldItem soldItem : currentSaleList) {
+            itemIDs.add(soldItem.getItem().getItemID());
+        }
+        return itemIDs;
+    }
+    /**
      * Gets the running total of the sale, excluding VAT.
      * @return the running total price without VAT.
      */
