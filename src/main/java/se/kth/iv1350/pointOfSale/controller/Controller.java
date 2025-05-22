@@ -76,10 +76,14 @@ public class Controller {
     }
 
     /**
+     *
      * The method save the item from the inventory system and adds it to the sale if it's found.
      * @param itemID is the input parameter from user interface when identifying the items.
      * @param quantity is the input parameter from the user interface setting the quantity of the item.
      * @return null if no such item exists in the inventory system, returns the ItemDTO to string if it's found.
+     * @throws ItemInvalidException if the item is invalid.
+     * @throws DatabaseConnectionException hordcoded itemID that signals database not connecting.
+     * @throws IOException if an I/O error occurs while reading the stream
      */
     public ItemDTO scanItem (int itemID, int quantity) throws ItemInvalidException, DatabaseConnectionException, IOException {
         try {

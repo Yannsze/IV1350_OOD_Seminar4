@@ -20,11 +20,14 @@ public class InventorySystem {
     private boolean throwDatabaseConnectionException;
 
     /**
+     *
      * The method looks through number of items in the inventory system and check if it's in the database.
      * @param itemIdentity takes the input parameter of the item from user interface.
      * @return the itemDTO if the item is found, else null.
+     * @throws ItemInvalidException when an itemID is invalid.
+     * @throws DatabaseConnectionException hardcoded itemID that signals data connection failure.
      */
-public ItemDTO itemFound (int itemIdentity) throws ItemInvalidException, DatabaseConnectionException {
+    public ItemDTO itemFound (int itemIdentity) throws ItemInvalidException, DatabaseConnectionException {
     if (throwDatabaseConnectionException) {
         throw new DatabaseConnectionException("Database is not running.");
     }

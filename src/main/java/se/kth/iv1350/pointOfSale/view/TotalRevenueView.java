@@ -11,5 +11,4 @@ public class TotalRevenueView implements TotalRevenueObserver {
     public void newTotalPrice(double newTotalPrice) {
         System.out.format("Total income: %.2f SEK\n", newTotalPrice);
     }
-
 }

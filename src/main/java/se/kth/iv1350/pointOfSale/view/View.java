@@ -1,8 +1,8 @@
 package se.kth.iv1350.pointOfSale.view;
 
 import se.kth.iv1350.pointOfSale.controller.Controller;
-import se.kth.iv1350.pointOfSale.dto.ItemDTO;
 import se.kth.iv1350.pointOfSale.model.SoldItem;
+import se.kth.iv1350.pointOfSale.model.TotalRevenueObserver;
 
 import java.util.ArrayList;
 
@@ -13,12 +13,64 @@ import java.util.ArrayList;
  */
 public class View {
     private Controller contr;
-    /**
-     * Creates a new instance, that uses the controller for all calls to other layers.
-     * @param contr The controller to use for all calls to other layers.
-     */
+
     public View(Controller contr) {
         this.contr = contr;
+        // addObservers();
+    }
+
+    public void runInitializeSale() {
+        contr.initializeSale();
+        System.out.println("A new sale has been initialized.");
+
+        try { contr.scanItem(123, 1); }
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        try { contr.scanItem(123, 1); }
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        try { contr.scanItem(999, 1); } // throw database exception
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        try { contr.scanItem(456, 1); }
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        try { contr.scanItem(987, 1); } // throw item invalid ID
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        try { contr.scanItem(123, 1); }
+        catch (Exception e) { System.out.println(e.getMessage()); }
+
+        ArrayList<SoldItem> soldItems = contr.getSoldItems();
+        for (SoldItem soldItem : soldItems) {
+            printSoldItemInfo(soldItem);
+        }
+
+        contr.applyCombinedDiscounts(12345);
+        contr.initializePayment(500);
+    }
+
+    /*
+
+
+    public class View {
+        private Controller contr;
+        /**
+         * Creates a new instance, that uses the controller for all calls to other layers.
+         * @param contr The controller to use for all calls to other layers.
+         */
+        public View(Controller contr) {
+            this.contr = contr;
+            // addObservers();
+        }
+
+        /*
+        private void addObservers() {
+            TotalRevenueView totalRevenueView = new TotalRevenueView();
+            TotalRevenueObserver totalRevenueObserver = new TotalRevenueFileOutput();
+        }
+
+         */
     }
 
     /**
@@ -28,22 +80,22 @@ public class View {
         contr.initializeSale();
         System.out.println("A new sale has been initialized.");
 
-        try { contr.scanItem(123, 1); } 
+        try { contr.scanItem(123, 1); }
         catch (Exception e) { System.out.println(e.getMessage()); }
 
-        try { contr.scanItem(123, 1); } 
+        try { contr.scanItem(123, 1); }
         catch (Exception e) { System.out.println(e.getMessage()); }
 
         try { contr.scanItem(999, 1); } // throw database exception
         catch (Exception e) { System.out.println(e.getMessage()); }
 
-        try { contr.scanItem(456, 1); } 
+        try { contr.scanItem(456, 1); }
         catch (Exception e) { System.out.println(e.getMessage()); }
 
         try { contr.scanItem(987, 1); } // throw item invalid ID
         catch (Exception e) { System.out.println(e.getMessage()); }
 
-        try { contr.scanItem(123, 1); }     
+        try { contr.scanItem(123, 1); }
         catch (Exception e) { System.out.println(e.getMessage()); }
 
         ArrayList<SoldItem> soldItems = contr.getSoldItems();
@@ -66,4 +118,5 @@ public class View {
         System.out.printf("Total VAT: %.2f SEK\n", soldItem.getVATAmount());
         System.out.println();
     }
+}
 }
